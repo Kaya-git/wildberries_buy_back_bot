@@ -1,13 +1,11 @@
 import os
-import random
-import time
 import pyautogui
 
 
 pyautogui.PAUSE = 0.2
 pyautogui.FAILSAFE = True
 
-print('Для выхода используйте <Ctrl+C')
+print('Для выхода используйте <Ctrl+C>')
 
 try:
     while True:
