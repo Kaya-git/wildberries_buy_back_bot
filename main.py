@@ -1,102 +1,136 @@
 import pyautogui
+from string import ascii_letters
+
+
+class Buy:
+    def __set_name__(self, owner, name):
+        self.name = "_" + name
+    
+    def __get__(self, instance, owner):
+        return instance.__dict__[self.name]
+    
+    def __set__(self, instance, value):
+        print(f"__set__: {self.name} = {value}")
+        instance.__dict__[self.name] = value
 
 
 class BuyBackBot:
-    BUY_BACK = True
-
-    @classmethod
-    def check_if_buy_now(cls, buy_back: bool) -> bool:
-        return cls.BUY_BACK != buy_back
-    
-    @classmethod
-    def check_market_name(cls, market_name):
-        return market_name == 'wb'
+    # WB = ['WB', 'wb', 'wildberries', 'ВБ', 'вб', 'валдбериз']
+    # OZON = ['OZON', 'ОЗОН', 'ozon', 'озон']
+    S_RUS = 'абвгдеёжзиклмнопрстуфхцчшщьыъэюя-'
+    S_RUS_UPPER = S_RUS.upper()
+    WBPICTURES = {
+        "cell_icon": "cell_icon", # нужно прописать пути к картинкам
+        "log_in_tab": "log_in_tab",
+        "log_on_num": "log_on_num",
+        "search_icon": "search_icon",
+        "search_tab": "search_tab",
+        "delay": "delay",
+        "buy_now_tab": "buy_now_tab",
+        "order_button": "order_button",
+    }
 
     def __init__(
             self,
-            buy_back,
-            icon,
-            log_in_tab,
-            log_on_num,
-            search_icon,
-            search_tab,
-            look_up_prod,
-            delay,
-            shop_picture,
-            buy_now_tab,
-            order_button,
-            add_to_bin_pic,
-            prod_name,
-            prod_picture_name
+            search_word,
+            prod_card_pic,
+            # market_name
             ):
-        if self.check_if_buy_now(buy_back):
-            self.BUY_BACK = False
-        self.__icon = icon
-        self.__log_in_tab = log_in_tab
-        self.__log_on_num = log_on_num
-        self.__search_icon = search_icon
-        self.__search_tab = search_tab
-        self.__look_up_prod = look_up_prod
-        self.__delay = delay
-        self.__shop_picture = shop_picture
-        self.__buy_now_tab = buy_now_tab
-        self.__order_button = order_button
-        self.__add_to_bin_pic = add_to_bin_pic
-        self.__prod_name = prod_name
-        self.__prod_picture_name = prod_picture_name
+
+        self.buy = search_word, prod_card_pic
+        # self.__market_name = market_name
+
+    # @classmethod
+    # def __check_market_name(cls, market_name):
+    #     if market_name in cls.WB:
+    #         cls.__market_name = 'wb'
+    #     if market_name in cls.OZON:
+    #         cls.__market_name = 'ozon'
+    #     else:
+    #         raise ValueError("Такого магазина нет в списке")
+
+    @classmethod
+    def verify_search_word(cls, search_word):
+        if type(search_word) != str:
+            raise TypeError("Поисковое слово должно быть строкой")
+        
+        words = search_word.split()
+        if len(words) < 1:
+            raise TypeError("неверный формат")
+        
+        letters = ascii_letters + cls.S_RUS + cls.S_RUS_UPPER
+        for letter in words:
+            if len(letter) < 1:
+                raise TypeError("Должен быть хотя бы один символ")
+            if len(letter.strip(letters)) != 0:
+                raise TypeError("Можно использовать только буквенные символы и дефис")
+
+    # Необходимо добавить загрузку картинок для проверки
+    # @classmethod
+    # def check_if_prod_card_pic_added(cls, prod_card_pic):
+    #     if prod_card_pic not in 'папка с файлами':
+    #         raise TypeError("Картинка не добавлена")
 
     def __del__(self):
         print(f'Удаление экземпляра: {str(self)}')
 
-    def turn_on(self, icon, log_in_tab, log_on_num):
+    def _turn_on(self):
         """
         Запускаем магаз и логинимся
         """
-        pyautogui.click(icon)
-        pyautogui.click(log_in_tab)
-        pyautogui.click(log_on_num)
+        pyautogui.click(self.WBPICTURES["cell_icon"])
+        pyautogui.click(self.WBPICTURES["log_in_tab"])
+        pyautogui.click(self.WBPICTURES["log_on_num"])
 
-    def search_by_prod_name(self):
+    def _search_by_word(self):
         """
         Выходим на вкладку поиска товара и находим списки с необходимым товаром
         """
-        pyautogui.click(self.search_icon)
-        pyautogui.click(self.search_tab)
-        pyautogui.typewrite(self.look_up_prod, self.delay)
+        pyautogui.click(self.WBPICTURES["search_icon"])
+        pyautogui.click(self.WBPICTURES["search_tab"])
+        pyautogui.typewrite(self.__search_word, self.WBPICTURES["delay"])
         pyautogui.press('enter')
 
-    def locate_my_prod(self):
+    def _locate_my_prod(self):
         """
         Находим необходимый продукт по картинке, либо скролим дальше
         """
         while True:
             try:
-                pyautogui.click(self.shop_picture)
+                pyautogui.click(self.__shop_picture)
                 break
             except:
                 pyautogui.scroll(2)
     
-    def buy_back_or_bin(self, prod_name, ):
+    def _buy_now(self):
         """Совершаем выкуп"""
-        if self.buy_now == True:
-            pyautogui.click(self.buy_now_tab)
-            pyautogui.click(self.order_button)
-        else:
-            pyautogui.click(self.add_to_bin_pic)
+        pyautogui.click(self.WBPICTURES["buy_now_tab"])
+        pyautogui.click(self.WBPICTURES["order_button"])
+  
+    @property
+    def buy(self):
+        self._turn_on()
+        self._search_by_word()
+        self._locate_my_prod()
+        self._buy_now()
+        return f' успешно выкуплен'
+    
+    @buy.setter
+    def buy(self, search_word, prod_card_pic):#market_name):
+        self.verify_search_word(search_word)
+        # self.__market_name = market_name
+        self.__search_word = search_word
+        self.__prod_card_pic = prod_card_pic
 
-    def set_buy(self, prod_name, prod_picture_name):
-        self.__prod_name = prod_name
-        self.__prod_picture_name = prod_picture_name
-        
-
-    def get_buy(self):
-        self.turn_on
-        self.search_by_prod_name
-        self.locate_my_prod
-        self.buy_back_or_bin
-        return f''
+    @buy.deleter
+    def buy(self):
+        del self.__search_word
+        # del self.__market_name
+        del self.__prod_card_pic
 
 
 if __name__ == '__main__':
-    print_screens_for_bot = {}
+    print_screens_for_bot = []
     wb_bot = BuyBackBot()
+    wb_bot.buy(search_word='Print category name', prod_card_pic='Path to the product card pic')#, market_name='Print name of the market')
+    print(wb_bot.buy)
