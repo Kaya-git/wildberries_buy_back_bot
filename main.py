@@ -3,51 +3,9 @@ from string import ascii_letters
 
 
 class Buy:
-    def __set_name__(self, owner, name):
-        self.name = "_" + name
-    
-    def __get__(self, instance, owner):
-        return instance.__dict__[self.name]
-    
-    def __set__(self, instance, value):
-        print(f"__set__: {self.name} = {value}")
-        instance.__dict__[self.name] = value
 
-
-class BuyBackBot:
-    # WB = ['WB', 'wb', 'wildberries', 'ВБ', 'вб', 'валдбериз']
-    # OZON = ['OZON', 'ОЗОН', 'ozon', 'озон']
     S_RUS = 'абвгдеёжзиклмнопрстуфхцчшщьыъэюя-'
     S_RUS_UPPER = S_RUS.upper()
-    WBPICTURES = {
-        "cell_icon": "cell_icon", # нужно прописать пути к картинкам
-        "log_in_tab": "log_in_tab",
-        "log_on_num": "log_on_num",
-        "search_icon": "search_icon",
-        "search_tab": "search_tab",
-        "delay": "delay",
-        "buy_now_tab": "buy_now_tab",
-        "order_button": "order_button",
-    }
-
-    def __init__(
-            self,
-            search_word,
-            prod_card_pic,
-            # market_name
-            ):
-
-        self.buy = search_word, prod_card_pic
-        # self.__market_name = market_name
-
-    # @classmethod
-    # def __check_market_name(cls, market_name):
-    #     if market_name in cls.WB:
-    #         cls.__market_name = 'wb'
-    #     if market_name in cls.OZON:
-    #         cls.__market_name = 'ozon'
-    #     else:
-    #         raise ValueError("Такого магазина нет в списке")
 
     @classmethod
     def verify_search_word(cls, search_word):
@@ -70,6 +28,43 @@ class BuyBackBot:
     # def check_if_prod_card_pic_added(cls, prod_card_pic):
     #     if prod_card_pic not in 'папка с файлами':
     #         raise TypeError("Картинка не добавлена")
+
+    def __set_name__(self, owner, name):
+        self.name = "_" + name
+    
+    def __get__(self, instance, owner):
+        return getattr(instance, self.name)
+    
+    def __set__(self, instance, value):
+        self.verify_search_word(value)
+        setattr(instance, self.name, value)
+
+
+class BuyBackBot:
+    
+    WBPICTURES = {
+        "cell_icon": "cell_icon", # нужно прописать пути к картинкам
+        "log_in_tab": "log_in_tab",
+        "log_on_num": "log_on_num",
+        "search_icon": "search_icon",
+        "search_tab": "search_tab",
+        "delay": "delay",
+        "buy_now_tab": "buy_now_tab",
+        "order_button": "order_button",
+    }
+
+    search_word = Buy()
+    prod_card_pic = Buy()
+
+    def __init__(
+            self,
+            search_word,
+            prod_card_pic,
+            ):
+
+        self.search_word = search_word
+        self.prod_card_pic = prod_card_pic
+
 
     def __del__(self):
         print(f'Удаление экземпляра: {str(self)}')
@@ -114,23 +109,9 @@ class BuyBackBot:
         self._locate_my_prod()
         self._buy_now()
         return f' успешно выкуплен'
-    
-    @buy.setter
-    def buy(self, search_word, prod_card_pic):#market_name):
-        self.verify_search_word(search_word)
-        # self.__market_name = market_name
-        self.__search_word = search_word
-        self.__prod_card_pic = prod_card_pic
-
-    @buy.deleter
-    def buy(self):
-        del self.__search_word
-        # del self.__market_name
-        del self.__prod_card_pic
 
 
 if __name__ == '__main__':
     print_screens_for_bot = []
-    wb_bot = BuyBackBot()
-    wb_bot.buy(search_word='Print category name', prod_card_pic='Path to the product card pic')#, market_name='Print name of the market')
-    print(wb_bot.buy)
+    wb_bot = BuyBackBot('фонарик', 'фонарик')
+    print(wb_bot.search_word)
