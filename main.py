@@ -9,6 +9,9 @@ class Buy:
 
     @classmethod
     def verify_search_word(cls, search_word):
+        """
+        Делаем проверку для поискового слова
+        """
         if type(search_word) != str:
             raise TypeError("Поисковое слово должно быть строкой")
         
@@ -43,14 +46,14 @@ class Buy:
 class BuyBackBot:
     
     WBPICTURES = {
-        "cell_icon": "cell_icon", # нужно прописать пути к картинкам
-        "log_in_tab": "log_in_tab",
-        "log_on_num": "log_on_num",
-        "search_icon": "search_icon",
-        "search_tab": "search_tab",
-        "delay": "delay",
-        "buy_now_tab": "buy_now_tab",
-        "order_button": "order_button",
+        "cell_icon": ".\\media\\tabs\\cell_icon.png",
+        "log_in_tab": ".\\media\\tabs\\log_in_tab.png",
+        "log_on_num": ".\\media\\tabs\\log_on_num.png",
+        "search_icon": ".\\media\\tabs\\search_icon.png",
+        "search_tab": ".\\media\\tabs\\search_tab.png",
+        "delay": 0.5,
+        "buy_now_tab": ".\\media\\tabs\\buy_now_tab.png",
+        "order_button": ".\\media\\tabs\\order_button",
     }
 
     search_word = Buy()
@@ -71,7 +74,7 @@ class BuyBackBot:
 
     def _turn_on(self):
         """
-        Запускаем магаз и логинимся
+        Запускаем магазин и логинимся
         """
         pyautogui.click(self.WBPICTURES["cell_icon"])
         pyautogui.click(self.WBPICTURES["log_in_tab"])
