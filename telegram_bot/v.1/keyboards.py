@@ -16,22 +16,30 @@ keyboard_main = ReplyKeyboardMarkup(
 )
 
 
-cb_balance = CallbackData('balance')
-cb_statics = CallbackData('s_word', 'shop_pic', 'bb_quantity', 'spend_sum_in_rub')
-cb_prices = CallbackData('service', 'price')
-cb_ask = CallbackData('question')
-
 keyboard_my_ac = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(text='Мой баланс', callback_data='balance'),
-            InlineKeyboardButton(text='Статистика', callback_data='s_word:shop_pic:bb_quantity:spend_sum')
+            InlineKeyboardButton(text='Статистика', callback_data='statistics')
         ],
         [
-            InlineKeyboardButton(text='Задать вопрос', callback_data='service:price')
+            InlineKeyboardButton(text='Задать вопрос', callback_data='ask_question')
         ],
         [
-            InlineKeyboardButton(text='Прайслист', callback_data='question')
+            InlineKeyboardButton(text='Прайслист', callback_data='prices')
         ]
     ],
+)
+
+
+keyboard_buy_back = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Указать сумму самовыкупа')
+        ],
+        [
+            KeyboardButton(text='Назад')
+        ]
+    ],
+    resize_keyboard=True
 )
