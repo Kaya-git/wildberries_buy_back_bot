@@ -2,7 +2,10 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardBut
 from aiogram.utils.callback_data import CallbackData
 
 
-keyboard_main = ReplyKeyboardMarkup(
+cb = CallbackData('ikb', 'action')
+
+
+kb_main = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text='Самовыкуп')
@@ -16,30 +19,50 @@ keyboard_main = ReplyKeyboardMarkup(
 )
 
 
-keyboard_my_ac = InlineKeyboardMarkup(
+kb_acount = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text='Мой баланс', callback_data='balance'),
-            InlineKeyboardButton(text='Статистика', callback_data='statistics')
+            InlineKeyboardButton(text='Мой баланс', callback_data=cb.new('balance')),
+            InlineKeyboardButton(text='Статистика', callback_data=cb.new('statistics'))
         ],
         [
-            InlineKeyboardButton(text='Задать вопрос', callback_data='ask_question')
+            InlineKeyboardButton(text='Задать вопрос', callback_data=cb.new('ask_question'))
         ],
         [
-            InlineKeyboardButton(text='Прайслист', callback_data='prices')
+            InlineKeyboardButton(text='Прайслист', callback_data=cb.new('prices'))
         ]
     ],
 )
 
 
-keyboard_buy_back = ReplyKeyboardMarkup(
+kb_amount = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text='Указать сумму самовыкупа')
         ],
         [
-            KeyboardButton(text='Назад')
+            KeyboardButton(text='отмена')
         ]
+    ],
+    resize_keyboard=True
+)
+
+
+kb_prod_card = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Карточка товара')
+        ],
+        [
+            KeyboardButton(text='Отмена')
+        ]
+    ],
+    resize_keyboard=True
+)
+
+cancel_button = ReplyKeyboardMarkup(
+    keyboard=[
+    [KeyboardButton(text='Отмена')]
     ],
     resize_keyboard=True
 )
