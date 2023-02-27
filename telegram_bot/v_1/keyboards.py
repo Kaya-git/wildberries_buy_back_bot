@@ -35,31 +35,6 @@ kb_acount = InlineKeyboardMarkup(
 )
 
 
-kb_amount = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text='Указать сумму самовыкупа')
-        ],
-        [
-            KeyboardButton(text='отмена')
-        ]
-    ],
-    resize_keyboard=True
-)
-
-
-kb_prod_card = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton(text='Карточка товара')
-        ],
-        [
-            KeyboardButton(text='Отмена')
-        ]
-    ],
-    resize_keyboard=True
-)
-
 cancel_button = ReplyKeyboardMarkup(
     keyboard=[
     [KeyboardButton(text='Отмена')]

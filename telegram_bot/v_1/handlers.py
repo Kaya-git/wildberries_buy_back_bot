@@ -1,12 +1,14 @@
 from aiogram.types import Message, CallbackQuery
-from aiogram.dispatcher.filters.state import StatesGroup, State
-from aiogram.dispatcher.filters import Text, Command
+from aiogram.filters.state import StatesGroup, State
+from aiogram.filters import Text, Command
 from aiogram.dispatcher import FSMContext
 
 from keyboards import kb_main, kb_acount, cancel_button, cb
 
 from bot import bot, dp
 
+
+# from postgresql import db_start, create_rofile, edit_profile
 
 class ClientStateGroup(StatesGroup):
     key_word = State()
@@ -23,6 +25,8 @@ async def main_menu(message: Message) -> None:
 
     await message.answer('Главное меню', reply_markup=kb_main)
     await message.delete()
+
+    # await create_rofile(user_id=message.from_user.id)
 
 
 @dp.message_handler(Text(equals=['Самовыкуп'], ignore_case=True), state=None)
@@ -87,11 +91,7 @@ async def check_product_card(message: Message):
 async def load_product_card(message: Message, state: FSMContext):
     async with state.proxy() as data:
         data['buy_back_amount'] = message.text
-    
-    await message.reply(
-        text='Ваш товар будет выкуплен в течении нескольких дней',
-        reply_markup=kb_main
-    )
+
 
     async with state.proxy() as data:
         print(data)
@@ -99,21 +99,10 @@ async def load_product_card(message: Message, state: FSMContext):
             chat_id=message.from_user.id,
             photo=data['product_card'],
             caption= f"Товар будет выкуплен в категории {data['key_word']}, на сумму {data['buy_back_amount']}",
+            reply_markup=kb_main
         )
-    
+    # await edit_profile(state, user_id=message.from_user.id)
     await state.finish()
-
-
-# @dp.message_handler(Text(equals=['Указать сумму самовыкупа']))
-# async def key_word(message: Message) -> None:
-#     """
-#     Ожидаем от пользователя сумму сомовыкупа
-#     """
-
-#     await ClientStateGroup.buy_back_amount.set()
-#     await message.answer(
-#         'Теперь напишите на какую сумму вы хотеть совершить самовыкупов.'
-    # )
 
 
 @dp.message_handler(Text(equals=['Настройки']))
