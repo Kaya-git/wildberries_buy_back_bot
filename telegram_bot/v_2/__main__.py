@@ -1,4 +1,4 @@
-from aiogram import Dispatcher, Bot, types
+from aiogram import Dispatcher, Bot
 from  config import BOT_TOKEN
 from commands import register_user_commands
 from commands.bot_commands import bot_commands
