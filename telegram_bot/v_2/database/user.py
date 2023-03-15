@@ -1,23 +1,31 @@
 from .base import BaseModel
-
+from typing import List, Optional
+from sqlalchemy import ForeignKey, String
 import datetime
+from database.stat_data import BuyStat
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-from sqlalchemy import Column, Integer, VARCHAR, DATE
 
 class User(BaseModel):
-    __tablename__ = 'users'
+    __tablename__ = 'user_account'
 
     #Telegram user id
-    user_id = Column(Integer, unique=True, nullable=False, primary_key=True)
+    user_id: Mapped[int] = mapped_column( primary_key=True, unique=True)
 
     #Telegram user name
-    user_name = Column(VARCHAR(32), unique=False, nullable=True)
+    user_name: Mapped[Optional[str]] = mapped_column(unique=False)
+
+    #User balance
+    balance: Mapped[Optional[int]] = mapped_column(unique=False)
+
+    #User history
+    buy_stat: Mapped[List["BuyStat"]] = relationship(back_populates="User", cascade="all, delete-orphan")
 
     #Registration date
-    reg_date = Column(DATE, default=datetime.date.today())
+    reg_date = mapped_column(default=datetime.date.today())
 
     #Last update date
-    upd_date = Column(DATE, onupdate=datetime.date.today())
+    upd_date = mapped_column(onupdate=datetime.date.today())
 
     def __str__(self) -> str:
         return f'<User:{self.user_id}>'

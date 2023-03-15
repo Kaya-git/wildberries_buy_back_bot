@@ -29,14 +29,13 @@ async def main():
         username="postgres",
         host="localhost",
         password="WW9JUQhP",
-        database="BuyBackBase",
-        port="5432"
+        database="buyback_db",
+        port = "5433"
     )
 
     async_engine = create_async_engine(postgres_url)
     session_maker = get_session_maker(async_engine)
     await proceed_schemas(async_engine, BaseModel.metadata)
-
     await dp.start_polling(bot)
 
 
