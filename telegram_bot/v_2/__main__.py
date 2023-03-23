@@ -7,6 +7,8 @@ import asyncio
 from aiogram.types import BotCommand
 from sqlalchemy.engine import URL
 from database import BaseModel, create_async_engine, get_session_maker, proceed_schemas
+import redis.asyncio as redis
+from aiogram.fsm.storage.redis import RedisStorage
 
 async def main():
     logging.basicConfig(level=logging.DEBUG)
@@ -15,7 +17,9 @@ async def main():
     for cmd in bot_commands:
         commands_for_bot.append(BotCommand(command=cmd[0], description=cmd[1]))
 
-    dp = Dispatcher()
+    r = redis.Redis()
+    
+    dp = Dispatcher(storage=RedisStorage(redis=r))
     bot = Bot(
         token=BOT_TOKEN,
         parse_mode='HTML'

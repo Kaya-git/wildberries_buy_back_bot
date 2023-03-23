@@ -2,7 +2,7 @@ from .base import BaseModel
 from typing import List, Optional
 from sqlalchemy import ForeignKey, String
 import datetime
-from database.stat_data import BuyStat
+# from database.stat_data import BuyStat
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -19,13 +19,13 @@ class User(BaseModel):
     balance: Mapped[Optional[int]] = mapped_column(unique=False)
 
     #User history
-    buy_stat: Mapped[List["BuyStat"]] = relationship(back_populates="User", cascade="all, delete-orphan")
+    # buy_stat: Mapped[List["BuyStat"]] = relationship(back_populates="User", cascade="all, delete-orphan")
 
     #Registration date
-    reg_date = mapped_column(default=datetime.date.today())
+    reg_date: Mapped[int] = mapped_column(default=datetime.date.today())
 
     #Last update date
-    upd_date = mapped_column(onupdate=datetime.date.today())
+    upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today())
 
     def __str__(self) -> str:
         return f'<User:{self.user_id}>'
