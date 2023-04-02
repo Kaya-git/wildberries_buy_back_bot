@@ -1,5 +1,5 @@
 from aiogram import Dispatcher, Bot
-from  config import BOT_TOKEN
+from config import BOT_TOKEN
 from commands import register_user_commands
 from commands.bot_commands import bot_commands
 import logging
@@ -9,6 +9,7 @@ from sqlalchemy.engine import URL
 from database import BaseModel, create_async_engine, get_session_maker, proceed_schemas
 import redis.asyncio as redis
 from aiogram.fsm.storage.redis import RedisStorage
+
 
 async def main():
     logging.basicConfig(level=logging.DEBUG)
@@ -34,7 +35,7 @@ async def main():
         host="localhost",
         password="WW9JUQhP",
         database="buyback_db",
-        port = "5433"
+        port="5432"
     )
 
     async_engine = create_async_engine(postgres_url)

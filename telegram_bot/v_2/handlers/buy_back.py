@@ -4,6 +4,7 @@ from finite_state_machine.finite_st_buyback import BuyBackStates
 from aiogram.fsm.context import FSMContext
 import logging
 
+
 async def start_buy_back(message: Message, state: FSMContext) -> None:
     """
     Обрабатываем команду сбора и информации для самовыкупа, ожидаем ввод ключевого слова от пользователя
