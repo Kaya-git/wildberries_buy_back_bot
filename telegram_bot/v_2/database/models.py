@@ -2,7 +2,6 @@ from .base import BaseModel
 from typing import List, Optional
 import datetime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from telegram_bot.v_2.database.buyback import BuyBack
 from sqlalchemy import ForeignKey
 
 
@@ -34,7 +33,7 @@ class User(BaseModel):
         __tablename__ = 'buyback_data'
 
         # Buyback id
-        id: Mapped[int] = mapped_column(primary_key=True)
+        id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
 
         # Telegram user id
         user_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_id"))
@@ -50,3 +49,6 @@ class User(BaseModel):
 
         # Amount of approved buybacks
         approved_amount: Mapped[int] = mapped_column(unique=False, nullable=True)
+
+        def __str__(self) -> str:
+            return f'<buyback: {self.id}'
