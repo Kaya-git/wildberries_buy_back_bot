@@ -1,5 +1,6 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from utils.callbackdata import MyAccountCallBackData
+from telegram_bot.v_2.utils.callbackdata import MyAccountCallBackData
+
 
 def get_inline_keyboard():
     inline_keyboard_builder = InlineKeyboardBuilder()

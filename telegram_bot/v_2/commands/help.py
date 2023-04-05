@@ -1,8 +1,9 @@
 from aiogram.types import Message
 from aiogram.filters import CommandObject
-from commands.bot_commands import bot_commands
+from telegram_bot.v_2.commands.bot_commands import bot_commands
 
-async def help(message:Message, command: CommandObject):
+
+async def help(message: Message, command: CommandObject):
     if command.args:
         for cmd in bot_commands:
             if cmd[0] == command.args:

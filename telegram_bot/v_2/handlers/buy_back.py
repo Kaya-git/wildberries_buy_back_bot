@@ -1,6 +1,6 @@
 from aiogram.types import Message
-from keyboards.reply import kb_main_menu, cancel_button
-from finite_state_machine.finite_st_buyback import BuyBackStates
+from telegram_bot.v_2.keyboards.reply import kb_main_menu, cancel_button
+from telegram_bot.v_2.finite_state_machine.finite_st_buyback import BuyBackStates
 from aiogram.fsm.context import FSMContext
 import logging
 

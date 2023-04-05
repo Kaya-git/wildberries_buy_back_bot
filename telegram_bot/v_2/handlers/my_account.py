@@ -1,5 +1,5 @@
 from aiogram.types import CallbackQuery
-from keyboards.inline import get_inline_keyboard
+from telegram_bot.v_2.keyboards.inline import get_inline_keyboard
 from aiogram.types import Message
 
 
