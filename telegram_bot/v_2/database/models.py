@@ -29,26 +29,27 @@ class User(BaseModel):
     def __str__(self) -> str:
         return f'<User:{self.user_id}>'
 
-    class BuyBack(BaseModel):
-        __tablename__ = 'buyback_data'
 
-        # Buyback id
-        id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+class BuyBack(BaseModel):
+    __tablename__ = 'buyback_data'
 
-        # Telegram user id
-        user_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_id"))
+    # Buyback id
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
 
-        # Keyword for buyback
-        wb_keyword: Mapped[str] = mapped_column(unique=False, nullable=False)
+    # Telegram user id
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_id"))
 
-        # Product card URL
-        pc_url: Mapped[str] = mapped_column(unique=False, nullable=False)
+    # Keyword for buyback
+    wb_keyword: Mapped[str] = mapped_column(unique=False, nullable=False)
 
-        # Buyback amount
-        ordered_amount: Mapped[int] = mapped_column(unique=False, nullable=False)
+    # Product card URL
+    pc_url: Mapped[str] = mapped_column(unique=False, nullable=False)
 
-        # Amount of approved buybacks
-        approved_amount: Mapped[int] = mapped_column(unique=False, nullable=True)
+    # Buyback amount
+    ordered_amount: Mapped[int] = mapped_column(unique=False, nullable=False)
 
-        def __str__(self) -> str:
-            return f'<buyback: {self.id}'
+    # Amount of approved buybacks
+    approved_amount: Mapped[int] = mapped_column(unique=False, nullable=True)
+
+    def __str__(self) -> str:
+        return f'<buyback: {self.id}'

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import sessionmaker
-
+from .models import BuyBack
 
 def create_buyback(
         session_maker: sessionmaker,
@@ -14,5 +14,11 @@ def create_buyback(
     """
     async with session_maker() as session:
         async with session.begin():
-        buyback = Bu
+        buyback = BuyBack(
+            user_id=user_id,
+            wb_keyword=wb_keyword,
+            pc_url=pc_url,
+            ordered_amount=ordered_amount,
+            approved_amount=approved_amount
+        )
 
