@@ -1,13 +1,25 @@
 from aiogram import Dispatcher, Bot
 from rq import Queue
-from config import BOT_TOKEN
+from config import (
+    BOT_TOKEN,
+    bd_host,
+    bd_username,
+    bd_pass,
+    bd_database,
+    bd_port
+)
 from commands import register_user_commands
 from commands.bot_commands import bot_commands
 import logging
 import asyncio
 from aiogram.types import BotCommand
 from sqlalchemy.engine import URL
-from database import BaseModel, create_async_engine, get_session_maker, proceed_schemas
+from database import (
+    BaseModel,
+    create_async_engine,
+    get_session_maker,
+    proceed_schemas
+)
 import redis.asyncio as redis
 from aiogram.fsm.storage.redis import RedisStorage
 
@@ -33,11 +45,11 @@ async def main():
 
     postgres_url = URL.create(
         "postgresql+asyncpg",
-        username="postgres",
-        host="localhost",
-        password="WW9JUQhP",
-        database="buyback_db",
-        port="5432"
+        username=bd_username,
+        host=bd_host,
+        password=bd_pass,
+        database=bd_database,
+        port=bd_port
     )
 
     async_engine = create_async_engine(postgres_url)
