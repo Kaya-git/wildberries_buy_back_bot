@@ -2,11 +2,11 @@ from aiogram import Dispatcher, Bot
 from rq import Queue
 from config import (
     BOT_TOKEN,
-    bd_host,
-    bd_username,
-    bd_pass,
-    bd_database,
-    bd_port
+    DB_HOST,
+    DB_USER,
+    DB_PASS,
+    DB_NAME,
+    DB_PORT
 )
 from commands import register_user_commands
 from commands.bot_commands import bot_commands
@@ -45,11 +45,11 @@ async def main():
 
     postgres_url = URL.create(
         "postgresql+asyncpg",
-        username=bd_username,
-        host=bd_host,
-        password=bd_pass,
-        database=bd_database,
-        port=bd_port
+        username=DB_USER,
+        host=DB_HOST,
+        password=DB_PASS,
+        database=DB_NAME,
+        port=DB_PORT
     )
 
     async_engine = create_async_engine(postgres_url)

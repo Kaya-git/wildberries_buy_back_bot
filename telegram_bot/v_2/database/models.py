@@ -1,55 +1,58 @@
 from .base import BaseModel
 from typing import List, Optional
 import datetime
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import ForeignKey
-
-
-class User(BaseModel):
-    __tablename__ = 'user_account'
-
-    # Telegram user id
-    user_id: Mapped[int] = mapped_column(primary_key=True, unique=True)
-
-    # Telegram user name
-    user_name: Mapped[Optional[str]] = mapped_column(unique=False)
-
-    # User balance
-    balance: Mapped[Optional[int]] = mapped_column(unique=False)
-
-    # Buyback data
-    buyback: Mapped[List["BuyBack"]] = relationship()
-
-    # Registration date
-    reg_date: Mapped[int] = mapped_column(default=datetime.date.today())
-
-    # Last update date
-    upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today())
-
-    def __str__(self) -> str:
-        return f'<User:{self.user_id}>'
 
 
 class BuyBack(BaseModel):
     __tablename__ = 'buyback_data'
 
-    # Buyback id
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    # Айди заказа
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-    # Telegram user id
-    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_id"))
-
-    # Keyword for buyback
+    # Ключевое слово для продвижения
     wb_keyword: Mapped[str] = mapped_column(unique=False, nullable=False)
 
-    # Product card URL
-    pc_url: Mapped[str] = mapped_column(unique=False, nullable=False)
+    # Ссылка на товар
+    item_number: Mapped[str] = mapped_column(unique=False, nullable=False)
 
-    # Buyback amount
+    # Цвет товара
+    item_colour: Mapped[Optional[str]] = mapped_column()
+
+    # Размер товара
+    item_size: Mapped[Optional[str]] = mapped_column()
+
+    # Кол-во самовыкупов
     ordered_amount: Mapped[int] = mapped_column(unique=False, nullable=False)
-
-    # Amount of approved buybacks
-    approved_amount: Mapped[int] = mapped_column(unique=False, nullable=True)
 
     def __str__(self) -> str:
         return f'<buyback: {self.id}'
+
+
+class User(BaseModel):
+    __tablename__ = 'user_account'
+
+    # Айди юзера
+    user_id: Mapped[int] = mapped_column(primary_key=True, unique=True)
+
+    # Никнейм в телеге
+    user_name: Mapped[Optional[str]] = mapped_column(unique=False)
+
+    # Дата регистрации
+    reg_date: Mapped[int] = mapped_column(default=datetime.date.today())
+
+    # Дата последнего обновления
+    upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today())
+    
+    # Заказ
+    order: Mapped[int] = mapped_column(ForeignKey("buyback_data.id"))
+
+    # Баланс
+    balance: Mapped[int] =  mapped_column(nullable=True)
+
+    def __str__(self) -> str:
+        return f'<User:{self.user_id}>'
+
+
+
