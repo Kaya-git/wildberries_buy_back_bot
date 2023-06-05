@@ -52,7 +52,7 @@ async def item_size(message: Message, state: FSMContext):
 
 async def buy_back_amount(message: Message, state: FSMContext):
     await state.update_data(item_size=message.text)
-    await state.set_state(BuyBackStates.buy_back_amount)
+    await state.set_state(BuyBackStates.bb_amount)
     await message.reply(
         'Укажи размер товара',
         reply_markup=cancel_button
@@ -61,8 +61,17 @@ async def buy_back_amount(message: Message, state: FSMContext):
 
 async def lets_ride(message: Message, state: FSMContext):
     await state.update_data(bb_amount=message.text)
-    await state.clear()
+    user_data = await state.get_data()
+    key_word = user_data["key_word"]
+    product_link = user_data["product_link"]
+    item_size = user_data["item_size"]
+    bb_amount = user_data["bb_amount"]
     await message.reply(
-        "Готово",
+        f"Ваш заказ по ключевому слову {key_word},"
+        f"ссылка на товар {product_link},"
+        f"размер товара {item_size}"
+        f"кол-во выкупов {bb_amount}",
         reply_markup=kb_main_menu
     )
+    
+    await state.clear()
