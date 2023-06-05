@@ -1,4 +1,4 @@
-from telegram_bot.v_2.utils.callbackdata import MyAccountCallBackData
+from utils.callbackdata import MyAccountCallBackData
 from aiogram.types import CallbackQuery
 
 

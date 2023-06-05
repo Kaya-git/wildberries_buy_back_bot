@@ -1,5 +1,5 @@
 from aiogram import Dispatcher, Bot
-from rq import Queue
+# from rq import Queue
 from config import (
     BOT_TOKEN,
     DB_HOST,
@@ -32,7 +32,7 @@ async def main():
         commands_for_bot.append(BotCommand(command=cmd[0], description=cmd[1]))
 
     r = redis.Redis()
-    q = Queue('work_queue', connection=r)
+    # q = Queue('work_queue', connection=r)
 
     dp = Dispatcher(storage=RedisStorage(redis=r))
     bot = Bot(

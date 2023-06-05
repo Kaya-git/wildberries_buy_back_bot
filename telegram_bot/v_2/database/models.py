@@ -1,5 +1,5 @@
 from .base import BaseModel
-from typing import List, Optional
+from typing import Optional
 import datetime
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import ForeignKey
@@ -12,19 +12,16 @@ class BuyBack(BaseModel):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     # Ключевое слово для продвижения
-    wb_keyword: Mapped[str] = mapped_column(unique=False, nullable=False)
+    key_word: Mapped[str] = mapped_column(unique=False, nullable=False)
 
     # Ссылка на товар
-    item_number: Mapped[str] = mapped_column(unique=False, nullable=False)
-
-    # Цвет товара
-    item_colour: Mapped[Optional[str]] = mapped_column()
+    product_link: Mapped[str] = mapped_column(unique=False, nullable=False)
 
     # Размер товара
     item_size: Mapped[Optional[str]] = mapped_column()
 
     # Кол-во самовыкупов
-    ordered_amount: Mapped[int] = mapped_column(unique=False, nullable=False)
+    bb_amount: Mapped[int] = mapped_column(unique=False, nullable=False)
 
     def __str__(self) -> str:
         return f'<buyback: {self.id}'

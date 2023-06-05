@@ -1,6 +1,6 @@
 from aiogram.types import Message
 
-from telegram_bot.v_2.keyboards.reply import kb_main_menu
+from keyboards.reply import kb_main_menu
 
 
 async def share(message: Message) -> None:

@@ -1,6 +1,6 @@
 from aiogram.types import Message
-from telegram_bot.v_2.keyboards.reply import kb_main_menu, cancel_button
-from telegram_bot.v_2.finite_state_machine.finite_st_buyback import BuyBackStates
+from keyboards.reply import kb_main_menu, cancel_button
+from finite_state_machine.finite_st_buyback import BuyBackStates
 from aiogram.fsm.context import FSMContext
 import logging
 
@@ -32,26 +32,35 @@ async def cancel(message: Message, state: FSMContext):
     await message.delete()
 
 
-async def load_product_card(message: Message, state: FSMContext):
+async def load_product_link(message: Message, state: FSMContext):
     await state.update_data(key_word=message.text)
-    await state.set_state(BuyBackStates.product_card)
+    await state.set_state(BuyBackStates.product_link)
     await message.reply(
         "Загрузи карточку для самовыкупа, как указанно в примере",
         reply_markup=cancel_button
     )
 
 
-async def buyback_amount(message: Message, state: FSMContext):
-    await state.update_data(product_card=message.photo[0].file_id)
+async def item_size(message: Message, state: FSMContext):
+    await state.update_data(product_link=message.text)
     await state.set_state(BuyBackStates.buy_back_amount)
     await message.reply(
-        'Укажи кол-во самовыкупов',
+        'Укажи размер товара',
+        reply_markup=cancel_button
+    )
+
+
+async def buy_back_amount(message: Message, state: FSMContext):
+    await state.update_data(item_size=message.text)
+    await state.set_state(BuyBackStates.buy_back_amount)
+    await message.reply(
+        'Укажи размер товара',
         reply_markup=cancel_button
     )
 
 
 async def lets_ride(message: Message, state: FSMContext):
-    await state.update_data(buy_back_amount=message.text)
+    await state.update_data(bb_amount=message.text)
     await state.clear()
     await message.reply(
         "Готово",
