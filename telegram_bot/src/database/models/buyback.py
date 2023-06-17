@@ -17,7 +17,7 @@ class BuyBack(Base):
     product_link: Mapped[str] = mapped_column(unique=False, nullable=False)
 
     # Размер товара
-    item_size: Mapped[Optional[str]] = mapped_column()
+    item_size: Mapped[Optional[str]] = mapped_column(nullable=True)
 
     # Кол-во самовыкупов
     bb_amount: Mapped[int] = mapped_column(unique=False, nullable=False)

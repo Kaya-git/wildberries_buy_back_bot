@@ -18,10 +18,10 @@ class User(Base):
     reg_date: Mapped[int] = mapped_column(default=datetime.date.today())
 
     # Дата последнего обновления
-    upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today())
+    upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today(), nullable=True)
     
     # Заказ
-    buyback: Mapped[int] = mapped_column(ForeignKey("buyback_data.id"))
+    buyback: Mapped[int] = mapped_column(ForeignKey("buyback_data.id"), nullable=True)
 
     # Баланс
     balance: Mapped[int] =  mapped_column(nullable=True)
