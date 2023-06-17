@@ -4,14 +4,14 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from v_2.database.base import BaseModel
-from v_2.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
+from src.database.models.base import Base
+from src.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
 
 import os
 import sys
 
 
-sys.path.append(os.path.join(sys.path[0], "v_2"))
+sys.path.append(os.path.join(sys.path[0], "src"))
 
 
 # this is the Alembic Config object, which provides
@@ -34,7 +34,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = BaseModel.metadata
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
