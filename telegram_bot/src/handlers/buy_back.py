@@ -3,6 +3,7 @@ from keyboards.reply import kb_main_menu, cancel_button
 from finite_state_machine.finite_st_buyback import BuyBackStates
 from aiogram.fsm.context import FSMContext
 import logging
+from database import Database
 
 
 async def start_buy_back(message: Message, state: FSMContext) -> None:
@@ -59,13 +60,15 @@ async def buy_back_amount(message: Message, state: FSMContext):
     )
 
 
-async def lets_ride(message: Message, state: FSMContext):
+async def lets_ride(message: Message, state: FSMContext, database: Database):
     await state.update_data(bb_amount=message.text)
     user_data = await state.get_data()
     key_word = user_data["key_word"]
     product_link = user_data["product_link"]
     item_size = user_data["item_size"]
     bb_amount = user_data["bb_amount"]
+    user_id = message.from_user.id
+      
     await message.reply(
         f"Ваш заказ по ключевому слову {key_word},"
         f"ссылка на товар {product_link},"

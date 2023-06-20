@@ -6,8 +6,8 @@ from sqlalchemy.ext.asyncio import create_async_engine as _create_async_engine
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-from .CRUD.user import UserRepo
-from .CRUD.buyback import BuybackRepo
+from .repositories.user import UserRepo
+from .repositories.buyback import BuybackRepo
 
 
 def create_async_engine(url: Union[URL, str]) -> AsyncEngine:
@@ -43,6 +43,8 @@ class Database:
         user: UserRepo = None,
         buyback: BuybackRepo = None
         ) -> None:
+        
         self.session = session
         self.user = user or UserRepo(session=session)
         self.buyback = buyback or BuybackRepo(session=session)
+        
