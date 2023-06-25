@@ -5,22 +5,42 @@ from sqlalchemy.engine import URL
 from sqlalchemy.ext.asyncio import create_async_engine as _create_async_engine
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-
+from src.config import conf
 from .repositories.user import UserRepo
 from .repositories.buyback import BuybackRepo
 
 
 def create_async_engine(url: Union[URL, str]) -> AsyncEngine:
-    return _create_async_engine(url=url, echo=True, pool_pre_ping=True)
+    """
+    :param url:
+    :return:
+    """
+    return _create_async_engine(
+        url=url, echo=conf.debug,
+        pool_pre_ping=True
+    )
 
 
-async def proceed_schemas(engine: AsyncEngine, metadata: MetaData) -> None:
-    async with engine.begin() as conn:
-        await conn.run_sync(metadata.create_all)
+def create_session_maker(engine: AsyncEngine = None) -> sessionmaker:
+    """
+    :param url:
+    :return:
+    """
+    return sessionmaker(
+        engine or create_async_engine(conf.db.build_connection_str()),
+        class_=AsyncSession,
+        expire_on_commit=False
+    )
 
 
-def get_session_maker(engine: AsyncEngine) -> sessionmaker:
-    return sessionmaker(engine, class_=AsyncEngine)
+
+# async def proceed_schemas(engine: AsyncEngine, metadata: MetaData) -> None:
+#     async with engine.begin() as conn:
+#         await conn.run_sync(metadata.create_all)
+
+
+# def get_session_maker(engine: AsyncEngine) -> sessionmaker:
+#     return sessionmaker(engine, class_=AsyncEngine)
 
 
 class Database:
