@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 from src.database.models.base import Base
-from src.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
+from src.config import conf
 
 import os
 import sys
@@ -17,13 +17,6 @@ sys.path.append(os.path.join(sys.path[0], "src"))
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-
-section = config.config_ini_section
-config.set_section_option(section, "DB_HOST", DB_HOST)
-config.set_section_option(section, "DB_NAME", DB_NAME)
-config.set_section_option(section, "DB_PASS", DB_PASS)
-config.set_section_option(section, "DB_PORT", DB_PORT)
-config.set_section_option(section, "DB_USER", DB_USER)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -41,6 +34,7 @@ target_metadata = Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+config.set_main_option('sqlalchemy.url', conf.db.build_connection_str())
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
