@@ -1,3 +1,3 @@
 from .adapter import Cache
 
-_all__ = ["Cache"]
+__all__ = ["Cache"]

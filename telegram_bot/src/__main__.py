@@ -4,12 +4,14 @@ import logging
 
 from aiogram import Bot
 
-from src.dispatcher import get_dispatcher, get_redis_storage
+from dispatcheres import get_redis_storage, get_dispatcher
 from src.utils.data_structure import TransferData
 from src.cache import Cache
-from src.config import conf
+from src.config import conf, DB_USER
 from src.database.database import create_session_maker
 
+
+print(DB_USER)
 
 async def start_bot():
     """

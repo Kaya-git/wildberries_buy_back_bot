@@ -1,5 +1,5 @@
 from aiogram.types import CallbackQuery, Message
-from keyboards.inline import get_inline_keyboard
+from ..keyboards.inline import get_inline_keyboard
 from utils.callbackdata import MyAccountCallBackData
 from aiogram import Router, F
 from aiogram.filters import Text

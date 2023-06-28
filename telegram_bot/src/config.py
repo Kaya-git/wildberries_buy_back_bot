@@ -28,7 +28,7 @@ class DataBaseConfig:
     name: str = os.environ.get("DB_NAME")
     user: str = os.environ.get("DB_USER")
     passwd: str = os.environ.get("DB_PASS")
-    port: int = int(os.environ.get("DB_PORT"))
+    port: str = os.environ.get("DB_PORT")
     host: str = os.environ.get("DB_HOST")
     
     driver: str = "asyncpg"
@@ -50,13 +50,13 @@ class DataBaseConfig:
 class RedisConfig:
     """ Redis connection variables"""
     
-    db: str = int(os.environ.get("REDIS_DATABASE"))
+    db: str = int(os.environ.get("REDIS_DATABASE", 1))
     host: str = os.environ.get("REDIS_HOST")
-    port: int = int(os.environ.get("REDIS_PORT"))
+    port: str = os.environ.get("REDIS_PORT")
     passwd: str = os.environ.get("REDIS_PASSWORD")
     username: int = os.environ.get("REDIS_USERNAME")
-    state_ttl: int = os.environ.get("REDIS_TTL_STATE")
-    data_ttl: int = os.environ.get("REDIS_TTL_DATA")
+    state_ttl: int = os.environ.get("REDIS_TTL_STATE", None)
+    data_ttl: int = os.environ.get("REDIS_TTL_DATA", None)
     
 
 @dataclass

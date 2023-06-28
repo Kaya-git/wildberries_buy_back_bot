@@ -1,6 +1,7 @@
 """ This file contains build dispatcher logic """
 from typing import Optional
-
+import sys
+sys.path.append('..')
 from aiogram import Dispatcher
 from aiogram.fsm.storage.base import BaseEventIsolation, BaseStorage
 from aiogram.fsm.storage.memory import MemoryStorage
@@ -10,7 +11,7 @@ from aiogram.fsm.strategy import FSMStrategy
 from src.cache import Cache
 from src.config import conf
 
-from .logic import routers
+from src.logic import routers
 
 
 def get_redis_storage(

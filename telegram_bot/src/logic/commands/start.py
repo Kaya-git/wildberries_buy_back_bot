@@ -1,5 +1,5 @@
 from aiogram.types import Message
-from keyboards.reply import kb_main_menu
+from src.logic.keyboards.reply import kb_main_menu
 from aiogram import Router
 from aiogram.filters import Command
 

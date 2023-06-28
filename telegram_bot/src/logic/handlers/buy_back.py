@@ -1,9 +1,9 @@
 from aiogram.types import Message
-from aiogram.filters import Command, Text
-from fsm.finite_st_buyback import BuyBackStates
+from aiogram.filters import Text
+from ..fsm.finite_st_buyback import BuyBackStates
 from aiogram import Router
-from keyboards.reply import kb_main_menu, cancel_button
-from fsm.finite_st_buyback import BuyBackStates
+from ..keyboards.reply import kb_main_menu, cancel_button
+from ..fsm.finite_st_buyback import BuyBackStates
 from aiogram.fsm.context import FSMContext
 import logging
 from database import Database

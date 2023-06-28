@@ -1,6 +1,6 @@
 from aiogram.types import Message
 from aiogram.filters import CommandObject, Command
-from commands.bot_commands import bot_commands
+from .bot_commands import bot_commands
 from aiogram import Router
 
 

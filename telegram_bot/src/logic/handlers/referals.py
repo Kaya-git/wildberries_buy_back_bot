@@ -1,6 +1,6 @@
 from aiogram.types import Message
 
-from keyboards.reply import kb_main_menu
+from ..keyboards.reply import kb_main_menu
 from aiogram.filters import Text
 from aiogram import Router
 
