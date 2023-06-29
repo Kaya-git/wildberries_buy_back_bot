@@ -21,6 +21,10 @@ from dotenv import load_dotenv
 
 from sqlalchemy.engine import URL
 
+
+load_dotenv()
+
+
 @dataclass
 class DataBaseConfig:
     """ Database connection variables """
@@ -53,8 +57,8 @@ class RedisConfig:
     db: str = int(os.environ.get("REDIS_DATABASE", 1))
     host: str = os.environ.get("REDIS_HOST")
     port: str = os.environ.get("REDIS_PORT")
-    passwd: str = os.environ.get("REDIS_PASSWORD")
-    username: int = os.environ.get("REDIS_USERNAME")
+    # passwd: str = os.environ.get("REDIS_PASSWORD")
+    # username: int = os.environ.get("REDIS_USERNAME")
     state_ttl: int = os.environ.get("REDIS_TTL_STATE", None)
     data_ttl: int = os.environ.get("REDIS_TTL_DATA", None)
     
@@ -69,8 +73,6 @@ class BotConfig:
 @dataclass
 class Configuration:
     """ All in one's configuration class """
-    
-    load_dotenv()
     
     debug = bool(os.environ.get("DEBUG"))
     logging_level = int(os.environ.get("LOGGING_LEVEL"))

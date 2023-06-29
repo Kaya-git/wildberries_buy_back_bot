@@ -1,17 +1,18 @@
 """ This file represent start up bot logic """
 import asyncio
 import logging
-
+import sys
+from pprint import pprint
+sys.path.append('..')
+pprint(sys.path)
 from aiogram import Bot
 
 from dispatcheres import get_redis_storage, get_dispatcher
 from src.utils.data_structure import TransferData
 from src.cache import Cache
-from src.config import conf, DB_USER
+from src.config import conf
 from src.database.database import create_session_maker
 
-
-print(DB_USER)
 
 async def start_bot():
     """

@@ -15,8 +15,8 @@ def build_redis_client() -> Redis:
         host=conf.redis.host,
         db=conf.redis.db,
         port=conf.redis.port,
-        password=conf.redis.passwd,
-        username=conf.redis.username,
+        # password=conf.redis.passwd,
+        # username=conf.redis.username,
     )
     asyncio.create_task(client.ping())
     return client

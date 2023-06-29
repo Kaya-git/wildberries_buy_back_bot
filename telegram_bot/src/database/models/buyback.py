@@ -7,9 +7,6 @@ from sqlalchemy.orm import Mapped, mapped_column
 class BuyBack(Base):
     __tablename__ = 'buyback_data'
 
-    # Айди заказа
-    buyback_id: Mapped[int] = mapped_column(unique=True, nullable=False)
-
     # Ключевое слово для продвижения
     key_word: Mapped[str] = mapped_column(unique=False, nullable=False)
 

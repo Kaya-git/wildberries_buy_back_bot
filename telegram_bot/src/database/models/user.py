@@ -21,7 +21,7 @@ class User(Base):
     upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today(), nullable=True)
     
     # Заказ
-    buyback: Mapped[int] = mapped_column(ForeignKey("buyback_data.id"), nullable=True)
+    buyback: Mapped[int] = mapped_column(ForeignKey("buyback_data.id", ondelete="all, delete-orphan"), nullable=True,)
 
     # Баланс
     balance: Mapped[int] =  mapped_column(nullable=True)

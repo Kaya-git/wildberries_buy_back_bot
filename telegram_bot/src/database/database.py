@@ -50,10 +50,10 @@ class Database:
     """
     
     user: UserRepo
-    """ User repository"""
+    """ User repository """
     
     buyback: BuybackRepo
-    """ Buy back order repository"""
+    """ Buy back order repository """
     
     session: AsyncSession
     
