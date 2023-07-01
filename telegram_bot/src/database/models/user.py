@@ -8,7 +8,7 @@ from sqlalchemy import ForeignKey
 class User(Base):
     __tablename__ = 'user_account'
 
-    # Айди юзера
+    # Айди юзера в телеграмме
     user_id: Mapped[int] = mapped_column(unique=True, nullable=False)
 
     # Никнейм в телеге
@@ -19,9 +19,6 @@ class User(Base):
 
     # Дата последнего обновления
     upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today(), nullable=True)
-    
-    # Заказ
-    buyback: Mapped[int] = mapped_column(ForeignKey("buyback_data.id", ondelete="all, delete-orphan"), nullable=True,)
 
     # Баланс
     balance: Mapped[int] =  mapped_column(nullable=True)

@@ -8,6 +8,7 @@ from aiogram.fsm.context import FSMContext
 import logging
 from database import Database
 from src.middlewares import DatabaseMiddleware
+from sqlalchemy import insert
 
 
 buyback_router = Router(name="buyback")
@@ -81,14 +82,22 @@ async def lets_ride(message: Message, state: FSMContext, db: Database):
     product_link = user_data["product_link"]
     item_size = user_data["item_size"]
     bb_amount = user_data["bb_amount"]
+    user_id = message.from_user.id
     
-    db.buyback.new(
+    current_user = await db.user.get_by_where(user_id=user_id)
+    
+    new_bb = await db.buyback.new(
         key_word=key_word,
         product_link=product_link,
         item_size=item_size,
         bb_amount=bb_amount)
     
-    # TODO Save to bd
+    db.user.insert_buyback()
+    
+    
+    
+
+    
     await message.reply(
         f"Ваш заказ по ключевому слову {key_word},"
         f"ссылка на товар {product_link},"

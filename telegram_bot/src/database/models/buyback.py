@@ -2,6 +2,7 @@ from .base import Base
 from typing import Optional
 import datetime
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import ForeignKey
 
 
 class BuyBack(Base):
@@ -18,6 +19,9 @@ class BuyBack(Base):
 
     # Кол-во самовыкупов
     bb_amount: Mapped[int] = mapped_column(unique=False, nullable=False)
+    
+    # Айди пользователя
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.c.user_id", ondelete="CASCADE"))
 
     def __str__(self) -> str:
         return f'<buyback: {self.id}'
