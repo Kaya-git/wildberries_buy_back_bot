@@ -21,6 +21,7 @@ class BuybackRepo(Repository[BuyBack]):
         product_link: str = None,
         item_size: Optional[str] = None,
         bb_amount: int = None,
+        user_id: int = None,
     ) -> None:
         """
         Insert a new user into the database
@@ -35,6 +36,7 @@ class BuybackRepo(Repository[BuyBack]):
                 product_link=product_link,
                 item_size=item_size,
                 bb_amount=bb_amount,
+                user_id=user_id
             )
         )
         return new_buyback

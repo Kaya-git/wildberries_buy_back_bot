@@ -48,13 +48,4 @@ class UserRepo(Repository[User]):
             )
         )
         return new_user
-
-    async def insert_buyback(
-        self,
-        user_id: int,
-        buyback_id: int
-    ):
-        user = select(self.type_model).where(user_id=user_id)
-        statement = insert(user).values(buyback=buyback_id)
-        return self.session.execute(statement)
     

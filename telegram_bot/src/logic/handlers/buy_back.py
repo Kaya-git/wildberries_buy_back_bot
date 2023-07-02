@@ -84,20 +84,14 @@ async def lets_ride(message: Message, state: FSMContext, db: Database):
     bb_amount = user_data["bb_amount"]
     user_id = message.from_user.id
     
-    current_user = await db.user.get_by_where(user_id=user_id)
-    
     new_bb = await db.buyback.new(
         key_word=key_word,
         product_link=product_link,
         item_size=item_size,
-        bb_amount=bb_amount)
-    
-    db.user.insert_buyback()
-    
-    
-    
-
-    
+        bb_amount=bb_amount,
+        user_id=user_id)
+    db.session.add(new_bb)
+    db.session.commit()
     await message.reply(
         f"Ваш заказ по ключевому слову {key_word},"
         f"ссылка на товар {product_link},"
