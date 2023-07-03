@@ -69,7 +69,7 @@ async def buy_back_amount(message: Message, state: FSMContext):
     await state.update_data(item_size=message.text)
     await state.set_state(BuyBackStates.bb_amount)
     await message.reply(
-        'Укажи размер товара',
+        'Укажи кол-во требуемых выкупов',
         reply_markup=cancel_button
     )
 
@@ -91,12 +91,12 @@ async def lets_ride(message: Message, state: FSMContext, db: Database):
         bb_amount=bb_amount,
         user_id=user_id)
     db.session.add(new_bb)
-    db.session.commit()
+    await db.session.commit()
     await message.reply(
-        f"Ваш заказ по ключевому слову {key_word},"
-        f"ссылка на товар {product_link},"
-        f"размер товара {item_size}"
-        f"кол-во выкупов {bb_amount}",
+        f"(Ваш заказ по ключевому слову {key_word}//"
+        f"ссылка на товар {product_link}//"
+        f"размер товара {item_size}//"
+        f"кол-во выкупов {bb_amount})",
         reply_markup=kb_main_menu
     )
     
