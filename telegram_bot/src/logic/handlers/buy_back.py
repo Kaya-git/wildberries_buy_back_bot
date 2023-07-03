@@ -12,7 +12,7 @@ from sqlalchemy import insert
 
 
 buyback_router = Router(name="buyback")
-buyback_router.message.middleware(DatabaseMiddleware)
+buyback_router.message.middleware(DatabaseMiddleware())
 
 
 @buyback_router.message(Text(text=['Самовыкуп'], ignore_case=True))

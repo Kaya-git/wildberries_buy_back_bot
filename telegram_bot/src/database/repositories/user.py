@@ -1,10 +1,10 @@
 """ User repository file """
-from typing import Optional, Type
+from typing import Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import insert, select
 
-from ..models import Base, User, BuyBack
+from ..models import User
 from .abstract import Repository
 
 
@@ -25,7 +25,6 @@ class UserRepo(Repository[User]):
         user_name: Optional[str] = None,
         reg_date: Optional[int] = None,
         upd_date: Optional[int] = None,
-        buyback: Optional[BuyBack] = None,
         balance: Optional[int] = None
     ) -> None:
         """
@@ -43,7 +42,6 @@ class UserRepo(Repository[User]):
                 user_name=user_name,
                 reg_date=reg_date,
                 upd_date=upd_date,
-                buyback=buyback,
                 balance=balance
             )
         )

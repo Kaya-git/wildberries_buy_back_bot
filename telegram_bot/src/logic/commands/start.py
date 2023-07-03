@@ -6,7 +6,7 @@ from database import Database
 from middlewares import DatabaseMiddleware
 
 start_router = Router(name="start")
-start_router.message.middleware(DatabaseMiddleware)
+start_router.message.middleware(DatabaseMiddleware())
 
 @start_router.message(Command(commands=['start']))
 async def start(message: Message, db: Database) -> None:
