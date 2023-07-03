@@ -6,7 +6,7 @@ from sqlalchemy import ForeignKey
 
 
 class User(Base):
-    __tablename__ = 'user_account'
+    __tablename__ = 'user'
 
     # Айди юзера в телеграмме
     user_id: Mapped[int] = mapped_column(unique=True, nullable=False)

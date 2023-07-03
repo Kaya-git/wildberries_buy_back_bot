@@ -2,9 +2,9 @@
 import asyncio
 import logging
 import sys
-from pprint import pprint
+
 sys.path.append('..')
-pprint(sys.path)
+
 from aiogram import Bot
 
 from dispatcheres import get_redis_storage, get_dispatcher

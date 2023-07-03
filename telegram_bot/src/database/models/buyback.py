@@ -6,7 +6,7 @@ from sqlalchemy import ForeignKey
 
 
 class BuyBack(Base):
-    __tablename__ = 'buyback_data'
+    __tablename__ = 'buyback'
 
     # Ключевое слово для продвижения
     key_word: Mapped[str] = mapped_column(unique=False, nullable=False)
@@ -21,7 +21,7 @@ class BuyBack(Base):
     bb_amount: Mapped[int] = mapped_column(unique=False, nullable=False)
     
     # Айди пользователя
-    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.c.user_id", ondelete="CASCADE"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.user_id", ondelete="CASCADE"))
 
     def __str__(self) -> str:
         return f'<buyback: {self.id}'
