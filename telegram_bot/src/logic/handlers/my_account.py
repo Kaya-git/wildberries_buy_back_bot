@@ -1,11 +1,14 @@
 from aiogram.types import CallbackQuery, Message
 from ..keyboards.inline import get_inline_keyboard
-from utils.callbackdata import MyAccountCallBackData
+from utils.callbackdata import AccountInfo
 from aiogram import Router, F
 from aiogram.filters import Text
+from database import Database
+
+from pprint import pprint
 
 
-account_info_router = Router(name="info")
+account_info_router = Router(name="info_menu")
 
 
 @account_info_router.message(Text(text=['Настройки']))
@@ -17,19 +20,19 @@ async def my_account(message: Message) -> None:
     await message.delete()
 
 
-@account_info_router.message(MyAccountCallBackData.filter(F.action == 'balance'))
-async def balance(call: CallbackQuery, callback_data: MyAccountCallBackData):
-    text = f'Ваш баланс равен "из базы данных"'
+@account_info_router.callback_query(AccountInfo.filter(F.action == 'balance'))
+async def balance(call: CallbackQuery, callback_data: AccountInfo):
+    text = f'Ваш баланс равен'
     await call.answer(text)
 
 
-@account_info_router.message(MyAccountCallBackData.filter(F.action == 'statistics'))
-async def statistics(call: CallbackQuery, callback_data: MyAccountCallBackData):
+@account_info_router.callback_query(AccountInfo.filter(F.action == 'statistics'))
+async def statistics(call: CallbackQuery, callback_data: AccountInfo):
     text = f'Здесь будет выводиться история ваших заказов'
     await call.answer(text)
 
 
-@account_info_router.message(MyAccountCallBackData.filter(F.action == 'price'))
-async def price(call: CallbackQuery, callback_data: MyAccountCallBackData):
+@account_info_router.callback_query(AccountInfo.filter(F.action == 'price'))
+async def price(call: CallbackQuery, callback_data: AccountInfo):
     text = f'Здесь будет выведена цена из базы'
     await call.answer(text)

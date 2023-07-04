@@ -13,11 +13,10 @@ async def start(message: Message, db: Database) -> None:
     """
     Хендлер на команду старта
     """
-    new_user = await db.user.new(
-        user_id=message.from_user.id,
-        user_name=message.from_user.username,
-    )
-    db.session.add(new_user)
-    await db.session.commit()
+    # new_user = await db.user.new(
+    #     user_id=message.from_user.id,
+    #     user_name=message.from_user.username,
+    # )
+    # await db.session.commit()
     await message.answer('Главное меню', reply_markup=kb_main_menu)
     await message.delete()

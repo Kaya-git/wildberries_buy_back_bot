@@ -2,7 +2,6 @@
 from typing import Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import insert, select
 
 from ..models import User
 from .abstract import Repository
@@ -23,9 +22,9 @@ class UserRepo(Repository[User]):
         self,
         user_id: int,
         user_name: Optional[str] = None,
-        reg_date: Optional[int] = None,
-        upd_date: Optional[int] = None,
         balance: Optional[int] = None
+        # reg_date: Optional[int] = None,
+        # upd_date: Optional[int] = None,
     ) -> None:
         """
         Insert a new user into the database
@@ -40,9 +39,9 @@ class UserRepo(Repository[User]):
             User(
                 user_id=user_id,
                 user_name=user_name,
-                reg_date=reg_date,
-                upd_date=upd_date,
-                balance=balance
+                balance=balance,
+                # reg_date=reg_date,
+                # upd_date=upd_date,
             )
         )
         return new_user

@@ -14,11 +14,11 @@ class User(Base):
     # Никнейм в телеге
     user_name: Mapped[Optional[str]] = mapped_column(unique=False, nullable=True)
 
-    # Дата регистрации
-    reg_date: Mapped[int] = mapped_column(default=datetime.date.today())
+    # # Дата регистрации
+    # reg_date: Mapped[int] = mapped_column(default=datetime.date.today())
 
-    # Дата последнего обновления
-    upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today(), nullable=True)
+    # # Дата последнего обновления
+    # upd_date: Mapped[int] = mapped_column(onupdate=datetime.date.today(), nullable=True)
 
     # Баланс
     balance: Mapped[int] =  mapped_column(nullable=True)

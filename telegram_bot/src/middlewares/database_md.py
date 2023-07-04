@@ -19,5 +19,6 @@ class DatabaseMiddleware(BaseMiddleware):
     ) -> Any:
 
         async with data["pool"]() as session:
+            print("МИДЛВАР")
             data["db"] = Database(session)
             return await handler(event, data)
