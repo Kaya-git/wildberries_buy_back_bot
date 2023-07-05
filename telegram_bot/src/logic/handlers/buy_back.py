@@ -78,25 +78,20 @@ async def buy_back_amount(message: Message, state: FSMContext):
 async def lets_ride(message: Message, state: FSMContext, db: Database):
     await state.update_data(bb_amount=message.text)
     user_data = await state.get_data()
-    key_word = user_data["key_word"]
-    product_link = user_data["product_link"]
-    item_size = user_data["item_size"]
-    bb_amount = user_data["bb_amount"]
-    user_id = message.from_user.id
     
-    # new_bb = await db.buyback.new(
-    #     key_word=key_word,
-    #     product_link=product_link,
-    #     item_size=item_size,
-    #     bb_amount=bb_amount,
-    #     user_id=user_id)
-    # print("ВЫКУП")
-    # await db.session.commit()
+    await db.buyback.new(
+        key_word=user_data["key_word"],
+        product_link=user_data["product_link"],
+        item_size=user_data["item_size"],
+        bb_amount=int(user_data["bb_amount"]),
+        user_id=message.from_user.id
+    )
+    await db.session.commit()
     await message.reply(
-        f"(Ваш заказ по ключевому слову {key_word}//"
-        f"ссылка на товар {product_link}//"
-        f"размер товара {item_size}//"
-        f"кол-во выкупов {bb_amount})",
+        f"Ваш заказ по ключевому слову: {user_data['key_word']}\n"
+        f"ссылка на товар: {user_data['product_link']}\n"
+        f"размер товара: {user_data['item_size']}\n"
+        f"кол-во выкупов: {user_data['bb_amount']}\n",
         reply_markup=kb_main_menu
     )
     

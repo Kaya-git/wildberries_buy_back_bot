@@ -4,12 +4,12 @@ from utils.callbackdata import AccountInfo
 from aiogram import Router, F
 from aiogram.filters import Text
 from database import Database
-
-from pprint import pprint
+from middlewares import DatabaseMiddleware
+from database.models import User
 
 
 account_info_router = Router(name="info_menu")
-
+account_info_router.callback_query.middleware(DatabaseMiddleware())
 
 @account_info_router.message(Text(text=['Настройки']))
 async def my_account(message: Message) -> None:
@@ -21,7 +21,13 @@ async def my_account(message: Message) -> None:
 
 
 @account_info_router.callback_query(AccountInfo.filter(F.action == 'balance'))
-async def balance(call: CallbackQuery, callback_data: AccountInfo):
+async def balance(call: CallbackQuery, callback_data: AccountInfo, db: Database):
+    user_id = call.from_user.id
+    stmt = await db.user.get_by_where(User.user_id==user_id)
+    for x in stmt:
+        print(x.user_id)
+        print(x.user_name)
+        print(x.balance)
     text = f'Ваш баланс равен'
     await call.answer(text)
 

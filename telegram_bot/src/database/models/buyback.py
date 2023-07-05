@@ -8,6 +8,9 @@ from sqlalchemy import ForeignKey
 class BuyBack(Base):
     __tablename__ = 'buyback'
 
+    # ID выкупа
+    id: Mapped[int] = mapped_column(primary_key=True, unique=True, autoincrement=True)
+    
     # Ключевое слово для продвижения
     key_word: Mapped[str] = mapped_column(unique=False, nullable=False)
 

@@ -23,5 +23,3 @@ class Base(object):
         return cls.__name__.lower()
     
     __allow_unmapped__ = False
-    
-    id: Mapped[int] = mapped_column(Integer, autoincrement=True, primary_key=True)
